@@ -12,7 +12,6 @@ class ImportRestrictionSet(private val rules: List<ImportRestriction>) : ImportR
     }
 }
 
-
 class ImportRestrictionAllow(source: PackageName, allowedDests: List<PackageName>) : ImportRestriction {
     private val sourceFilter = PackagePathFilter(source)
     private val allowPatterns: Set<PackagePathFilter> = allowedDests.map { PackagePathFilter(it) }.toSet()

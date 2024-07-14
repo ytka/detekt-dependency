@@ -11,7 +11,7 @@ class MyRuleSetProvider : RuleSetProvider {
     override fun instance(config: Config): RuleSet = RuleSet(
         ruleSetId,
         listOf(
-            PackageRestriction(config),
+            PackageRestrictionRule(config),
         )
     )
 }

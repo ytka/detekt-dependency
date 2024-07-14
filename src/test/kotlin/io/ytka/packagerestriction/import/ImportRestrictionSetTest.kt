@@ -15,4 +15,13 @@ class ImportRestrictionSetTest {
         assertFalse(rule.isAllowed("java.io", "java.io.File"))
         assertFalse(rule.isAllowed("java.io", "java.net.URL"))
     }
+
+    @Test
+    fun testIsAllowedEmpty() {
+        val rule = ImportRestrictionSet(listOf())
+        assertTrue(rule.isAllowed("java.io", "java.io.FileInputStream"))
+        assertTrue(rule.isAllowed("java.net", "java.io.File"))
+        assertTrue(rule.isAllowed("java.io", "java.io.File"))
+        assertTrue(rule.isAllowed("java.io", "java.net.URL"))
+    }
 }

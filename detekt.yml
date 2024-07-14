@@ -1,14 +1,34 @@
 style:
   WildcardImport:
     active: false
+
+processors:
+  active: true
+  exclude:
+    - 'ProjectCLOCProcessor'
+    - 'DetektProgressListener'
+    - 'KtFileCountProcessor'
+    - 'PackageCountProcessor'
+    - 'ClassCountProcessor'
+    - 'FunctionCountProcessor'
+    - 'PropertyCountProcessor'
+  # - 'ProjectComplexityProcessor'
+  # - 'ProjectCognitiveComplexityProcessor'
+  # - 'ProjectLLOCProcessor'
+  # - 'ProjectLOCProcessor'
+  # - 'ProjectSLOCProcessor'
+  # - 'LicenseHeaderLoaderExtension'
+
 package-restriction:
   PackageRestriction:
     active: true
     package-prefix: io.ytka.packagerestriction # TODO
     packages:
       - name: detektext
-        import-allows: [packagedeps]
+        import-allows:
+          - packagedeps
         cyclomatic-complexity-threshold: 3
       - name: packagedeps
-        import-denys: ["*"]  # 対象パッケージからのimportをチェックし、import先がこの条件にマッチする場合、違反とする。package-prefixをプレフィックスとして補完した上でマッチングする。
+        import-denys:
+          - "*" # 対象パッケージからのimportをチェックし、import先がこの条件にマッチする場合、違反とする。package-prefixをプレフィックスとして補完した上でマッチングする。
         cyclomatic-complexity-threshold: 10
