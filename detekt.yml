@@ -2,8 +2,6 @@ style:
   WildcardImport:
     active: false
 package-characteristic:
-  TooManyFunctions:
-    active: true
   PackageCharacteristic:
     active: true
     package-prefix: io.ytka.package_characteristic # TODO
