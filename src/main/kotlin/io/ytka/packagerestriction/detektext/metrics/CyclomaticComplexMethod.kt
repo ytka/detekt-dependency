@@ -22,7 +22,7 @@ import org.jetbrains.kotlin.psi.*
  * - __Scope Functions__ - `let`, `run`, `with`, `apply`, and `also` ->
  *  [Reference](https://kotlinlang.org/docs/scope-functions.html)
  */
-class PRCyclomaticComplexMethod(
+class CyclomaticComplexMethod(
     // McCabe's Cyclomatic Complexity (MCC) number for a method.
     private val threshold: Int?,
     // Ignores a complex method if it only contains a single when expression.
@@ -34,17 +34,7 @@ class PRCyclomaticComplexMethod(
     // Comma separated list of function names which add complexity.
     private val nestingFunctions: Set<String> = DEFAULT_NESTING_FUNCTIONS.toSet(),
 ) {
-
-    private val issue = Issue(
-        "PRCyclomaticComplexMethod",
-        Severity.Maintainability,
-        "Prefer splitting up complex methods into smaller, easier to test methods.",
-        Debt.TWENTY_MINS
-    )
-
-
-
-    fun visitNamedFunction(function: KtNamedFunction) : CodeSmell? {
+    fun visitNamedFunction(function: KtNamedFunction) : Triple<Entity,Metric,String>? {
         if (threshold == null) {
             return null
         }
@@ -53,16 +43,15 @@ class PRCyclomaticComplexMethod(
         }
 
         val complexity = CyclomaticComplexity.calculate(function) {
-            this.ignoreSimpleWhenEntries = this@PRCyclomaticComplexMethod.ignoreSimpleWhenEntries
-            this.ignoreNestingFunctions = this@PRCyclomaticComplexMethod.ignoreNestingFunctions
-            this.nestingFunctions = this@PRCyclomaticComplexMethod.nestingFunctions
+            this.ignoreSimpleWhenEntries = this@CyclomaticComplexMethod.ignoreSimpleWhenEntries
+            this.ignoreNestingFunctions = this@CyclomaticComplexMethod.ignoreNestingFunctions
+            this.nestingFunctions = this@CyclomaticComplexMethod.nestingFunctions
         }
 
         // println("function: ${function.fqName}, complexity: $complexity")
 
         if (complexity >= threshold) {
-            return ThresholdedCodeSmell(
-                    issue,
+            return Triple(
                     Entity.atName(function),
                     Metric("MCC", complexity, threshold),
                     "The function ${function.nameAsSafeName} appears to be too complex " +

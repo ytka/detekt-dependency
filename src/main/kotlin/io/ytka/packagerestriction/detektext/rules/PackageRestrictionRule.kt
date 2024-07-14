@@ -44,7 +44,7 @@ class PackageRestrictionRule(config: Config) : Rule(config) {
         val pkgRestrictions = packageRestrictions.findPackageRestrictions(sourcePkg)
 
         pkgRestrictions.forEach { pkgRestriction ->
-            pkgRestriction.cyclomaticComplexMethod.visitNamedFunction(function)?.let { report(it) }
+            pkgRestriction.cyclomaticComplexMethod.visitNamedFunction(function)?.let { report(ThresholdedCodeSmell(issue, it.first, it.second, it.third)) }
         }
     }
 }

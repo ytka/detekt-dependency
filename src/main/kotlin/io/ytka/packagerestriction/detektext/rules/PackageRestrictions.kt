@@ -1,11 +1,11 @@
 package io.ytka.packagerestriction.detektext.rules
 
-import io.ytka.packagerestriction.detektext.metrics.PRCyclomaticComplexMethod
+import io.ytka.packagerestriction.detektext.metrics.CyclomaticComplexMethod
 import io.ytka.packagerestriction.imports.*
 
 class PackageRestriction(
     val importRestriction: ImportRestrictionInProject,
-    val cyclomaticComplexMethod: PRCyclomaticComplexMethod,
+    val cyclomaticComplexMethod: CyclomaticComplexMethod,
 )
 
 class PackageRestrictions(private val projectPackagePrefix: String) {
@@ -27,12 +27,12 @@ class PackageRestrictions(private val projectPackagePrefix: String) {
             // println("name: $name, importAllows: $importAllows, importDenys: $importDenys, cyclomaticComplexityThreshold: $cyclomaticComplexityThreshold")
 
             val importRestriction = createImportRestriction(name as String, importAllows, importDenys)
-            this.addPackageRestriction(PackagePathFilter(name), importRestriction, PRCyclomaticComplexMethod(cyclomaticComplexityThreshold))
+            this.addPackageRestriction(PackagePathFilter(name), importRestriction, CyclomaticComplexMethod(cyclomaticComplexityThreshold))
         }
     }
 
     private val packageRestrictionSets: MutableMap<PackagePathFilter, PackageRestriction> = mutableMapOf()
-    private fun addPackageRestriction(pathFilter: PackagePathFilter, importRestriction: ImportRestriction, cyclomaticComplexMethod: PRCyclomaticComplexMethod) {
+    private fun addPackageRestriction(pathFilter: PackagePathFilter, importRestriction: ImportRestriction, cyclomaticComplexMethod: CyclomaticComplexMethod) {
         packageRestrictionSets[pathFilter] = PackageRestriction(
             importRestriction = ImportRestrictionInProject(projectPackagePrefix, pathFilter, importRestriction),
             cyclomaticComplexMethod = cyclomaticComplexMethod,
