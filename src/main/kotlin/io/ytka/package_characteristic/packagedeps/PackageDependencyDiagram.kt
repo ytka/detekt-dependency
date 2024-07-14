@@ -1,4 +1,4 @@
-package io.ytka.package_characteristic.domain.packagedeps
+package io.ytka.package_characteristic.packagedeps
 
 class PackageDependencyDiagram(private val dependencies: List<Dependency>) {
     fun toMermaid(): String {

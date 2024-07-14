@@ -4,32 +4,13 @@ style:
 package-characteristic:
   TooManyFunctions:
     active: true
-  PackageImport:
+  PackageCharacteristic:
     active: true
-    packagePrefix: io.ytka.detekt.dependency.extension  # TODO
-    includes: ["*ytka*"]
-    allows:  #TODO
-      from: io.ytka.detekt.dependency.extension.processors
-      to:
-        - io.ytka.detekt.dependency.extension.model
-    denys:  # TODO
-        io.ytka.detekt.dependency.extension.model:
-          - io.ytka.detekt.dependency.extension.*
-  PackageComplexity:  # TODO
-    active: true
-    defaultThreshold: 3
-    thresholdEachPackage:
-      - io.ytka.detekt.dependency.extension.model: 10
-#package
-
-processors:
-  active: true
-  #exclude:
-  #  - DependencyProcessor
-
-#  Util to listOf(Domain),
-#  Domain to listOf(Util),
-#  Infra to listOf(Util, Domain),
-#  ApplicationService to listOf(Util, Domain, Infra, QueryService),
-#  QueryService to listOf(Util, Domain, Infra),
-#  Controller to listOf(Util, Domain, ApplicationService, QueryService),
+    package-prefix: io.ytka.package_characteristic # TODO
+    packages:
+      - name: detektext
+        import-allows: [packagedeps]
+        cyclomatic-complexity-threshold: 3
+      - name: packagedeps
+        import-denys: ["*"]  # 対象パッケージからのimportをチェックし、import先がこの条件にマッチする場合、違反とする。package-prefixをプレフィックスとして補完した上でマッチングする。
+        cyclomatic-complexity-threshold: 10

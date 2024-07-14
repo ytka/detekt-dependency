@@ -12,7 +12,7 @@ class MyConfigValidator : ConfigValidator {
         val result = mutableListOf<Notification>()
         runCatching {
             config.subConfig("package-characteristic")
-                .subConfig("PackageImport")
+                .subConfig("PackageCharacteristic")
                 .valueOrNull<Boolean>("active")
         }.onFailure {
             result.add(Message("'active' property must be of type boolean."))
