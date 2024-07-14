@@ -1,2 +1,5 @@
-* generate mermaid diagram
+* パッケージごとのサイクロマティック複雑度を強制できるルール
+* パッケージごとのサイクロマティック複雑度を出力
+* パッケージレベルの依存を禁止するルール
+* output report file
 * test

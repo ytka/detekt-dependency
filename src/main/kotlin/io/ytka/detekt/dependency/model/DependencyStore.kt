@@ -1,51 +1,9 @@
 package io.ytka.detekt.dependency.model
 
-import java.nio.file.FileSystems
 import java.nio.file.Path
-import java.nio.file.PathMatcher
 
 typealias PackageName = String
-
-class PathFilters(
-    private val includes: Set<PathMatcher>?,
-    private val excludes: Set<PathMatcher>?
-) {
-
-    fun isIgnored(path: Path): Boolean {
-        fun isIncluded() = includes?.any { it.matches(path) } ?: true
-        fun isExcluded() = excludes?.any { it.matches(path) } ?: false
-
-        return !(isIncluded() && !isExcluded())
-    }
-
-    companion object {
-        fun of(includes: List<String>, excludes: List<String>): PathFilters {
-            return PathFilters(parse(includes), parse(excludes))
-        }
-
-        private fun parse(value: List<String>): Set<PathMatcher>? =
-            if (value.isEmpty()) {
-                null
-            } else {
-                value
-                    .map { pathMatcher(it) }
-                    .toSet()
-            }
-    }
-}
-private fun pathMatcher(pattern: String): PathMatcher {
-    val result = when (pattern.substringBefore(":")) {
-        "glob" -> pattern
-        "regex" -> throw IllegalArgumentException(USE_GLOB_MSG)
-        else -> "glob:$pattern"
-    }
-
-    return FileSystems.getDefault().getPathMatcher(result)
-}
-
-private const val USE_GLOB_MSG =
-    "Only globbing patterns are supported as they are treated os-independently by the PathMatcher api."
-
+typealias Dependency = Pair<PackageName,PackageName>
 
 class DependencyStore(private val pathFilters : PathFilters) {
     private val dependencies = mutableMapOf<PackageName,MutableSet<PackageName>>()
@@ -68,11 +26,23 @@ class DependencyStore(private val pathFilters : PathFilters) {
         dependencies.computeIfAbsent(source) { mutableSetOf() }.add(target)
     }
 
+    fun toList(): List<Dependency> {
+        val result = mutableListOf<Dependency>()
+        dependencies.forEach { (src, deps) ->
+            deps.forEach { dep ->
+                result.add(Pair(src, dep))
+            }
+        }
+        return result
+    }
+
     override fun toString(): String {
         val sb = StringBuilder()
-        dependencies.forEach { (pkg, deps) ->
-            sb.append("$pkg: ${deps.joinToString(", ")}\n")
+        dependencies.forEach { (src, deps) ->
+            sb.append("$src: ${deps.joinToString(", ")}\n")
         }
         return sb.toString()
     }
+
+    fun toDiagram() = DependencyDiagram(toList()).toMermaid()
 }
