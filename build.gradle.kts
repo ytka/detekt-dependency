@@ -3,7 +3,7 @@ plugins {
     id("maven-publish")
 }
 
-group = "test"
+group = "io.github.ytka"
 version = "0.1-SNAPSHOT"
 
 repositories {
