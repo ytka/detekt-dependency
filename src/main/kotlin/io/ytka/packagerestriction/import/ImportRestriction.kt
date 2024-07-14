@@ -21,6 +21,9 @@ class ImportRestrictionAllow(source: PackageName, allowedDests: List<PackageName
         }
         return allowPatterns.any { it.matches(dest) }
     }
+    override fun toString(): String {
+        return "ImportRestrictionAllow(source=$sourceFilter, allowPatterns=$allowPatterns)"
+    }
 }
 
 class ImportRestrictionDeny(source: PackageName, denyDests: List<PackageName>) : ImportRestriction {
@@ -31,5 +34,8 @@ class ImportRestrictionDeny(source: PackageName, denyDests: List<PackageName>) :
             return true
         }
         return !denyPatterns.any { it.matches(dest) }
+    }
+    override fun toString(): String {
+        return "ImportRestrictionDeny(source=$sourceFilter, denyPatterns=$denyPatterns)"
     }
 }

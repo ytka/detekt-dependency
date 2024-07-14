@@ -2,7 +2,7 @@ package io.ytka.packagerestriction.detektext.rules
 
 import io.gitlab.arturbosch.detekt.api.*
 import io.ytka.packagerestriction.import.*
-import org.jetbrains.kotlin.psi.KtFile
+import org.jetbrains.kotlin.psi.KtImportList
 
 
 private fun createImportRestriction(name: String, importAllows: List<String>?, importDenys: List<String>?): ImportRestriction {
@@ -44,32 +44,26 @@ class PackageRestrictionRule(config: Config) : Rule(config) {
         }
     }
 
-    override fun visitKtFile(file: KtFile) {
-        super.visitKtFile(file)
-        val sourcePkg = file.packageFqName.toString()
+    override fun visitImportList(importList: KtImportList) {
+        super.visitImportList(importList)
+
+        val sourcePkg = importList.containingKtFile.packageFqName.toString()
         val pkgRestrictions = packageRestrictionSet.findPackageRestrictions(sourcePkg)
 
-        file.importDirectives.forEach { importDirective ->
-            val destPkg = importDirective.importedFqName?.parent()?.asString() ?: ""
-//            val destPkg = importDirective.importedFqName.toString()
+        val destPkgs = importList.imports.map { importDirective -> importDirective.importPath?.pathStr ?: ""}
+            .map { importPath -> importPath.substringBeforeLast(".") }
+            .distinct()
+        destPkgs.forEach { destPkg ->
             //println("sourcePkg: $sourcePkg, destPkg: $destPkg")
-
-            pkgRestrictions.forEach { restriction ->
-                if (!restriction.isAllowedImport(sourcePkg, destPkg)) {
-                    report(CodeSmell(issue, Entity.from(file),
-                        "The import of $destPkg is not allowed in $sourcePkg."))
+            pkgRestrictions.forEach { pkgRestriction ->
+                if (!pkgRestriction.isAllowedImport(sourcePkg, destPkg)) {
+                    report(CodeSmell(issue, Entity.from(importList),
+                        "The import of $destPkg is not allowed from $sourcePkg. details: $pkgRestriction."))
                 }
             }
         }
-        /*
-        if (amount > threshold) {
-            report(CodeSmell(issue, Entity.from(file),
-                "The amount of functions in this file is higher than the threshold of $threshold."))
-        }
-        amount = 0
-
-         */
     }
+
 
     /*
     // TODO: calculate cyclomatic complexity

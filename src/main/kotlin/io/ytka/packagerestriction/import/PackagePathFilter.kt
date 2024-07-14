@@ -6,11 +6,16 @@ import java.nio.file.PathMatcher
 typealias PackagePathPattern = String
 
 class PackagePathFilter(pathPattern: PackagePathPattern) {
+    private val globPathPattern = "glob:${complementFilterPattern(pathPattern)}"
     private val pathMatcher: PathMatcher = FileSystems.getDefault().
-        getPathMatcher("glob:${complementFilterPattern(pathPattern)}")
+        getPathMatcher(globPathPattern)
 
     fun matches(packagePath: String): Boolean {
         return pathMatcher.matches(FileSystems.getDefault().getPath(packagePath))
+    }
+
+    override fun toString(): String {
+        return "PackagePathFilter($globPathPattern)"
     }
 }
 

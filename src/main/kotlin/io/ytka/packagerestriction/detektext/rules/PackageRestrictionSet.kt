@@ -9,7 +9,14 @@ class PackageRestriction(private val projectPackagePrefix: String, private val p
         if (!source.startsWith(projectPackagePrefix) || !dest.startsWith(projectPackagePrefix)) {
             return true
         }
+        if (pathFilter.matches(dest)) {
+            return true
+        }
         return pathFilter.matches(source) && importRestriction.isAllowed(source, dest)
+    }
+
+    override fun toString(): String {
+        return "PackageRestriction(projectPackagePrefix=$projectPackagePrefix, pathFilter=$pathFilter, importRestriction=$importRestriction)"
     }
 }
 
