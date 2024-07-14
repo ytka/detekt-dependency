@@ -20,15 +20,15 @@ processors:
   # - 'LicenseHeaderLoaderExtension'
 
 package-restriction:
-  PackageRestriction:
+  PackageRestrictionRule:
     active: true
-    package-prefix: io.ytka.packagerestriction # TODO
+    project-package-prefix: io.ytka.packagerestriction  # prefixにマッチするパッケージ名を対象とする。import先のチェックもこのprefixを含むものだけを対象とする。
     packages:
-      - name: detektext
+      - name: io.ytka.packagerestriction.detektext
         import-allows:
-          - packagedeps
+          - io.ytka.packagerestriction.packagedeps
         cyclomatic-complexity-threshold: 3
-      - name: packagedeps
+      - name: io.ytka.packagerestriction.packagedeps
         import-denys:
           - "*" # 対象パッケージからのimportをチェックし、import先がこの条件にマッチする場合、違反とする。package-prefixをプレフィックスとして補完した上でマッチングする。
         cyclomatic-complexity-threshold: 10

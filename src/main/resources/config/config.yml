@@ -1,5 +1,0 @@
-dependency:
-  TooManyFunctions:
-    active: true
-  PackageImport:
-    active: true
