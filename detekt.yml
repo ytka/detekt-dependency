@@ -1,0 +1,15 @@
+style:
+  WildcardImport:
+    active: false
+dependency:
+  TooManyFunctions:
+    active: true
+  PackageImport:
+    active: true
+    #excludes: ["*"]
+    includes: ["*ytka*"]
+
+processors:
+  active: true
+  #exclude:
+  #  - DependencyProcessor

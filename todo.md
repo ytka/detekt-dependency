@@ -1,0 +1,2 @@
+* generate mermaid diagram
+* test
