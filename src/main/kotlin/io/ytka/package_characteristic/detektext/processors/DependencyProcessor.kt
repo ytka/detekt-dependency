@@ -1,21 +1,21 @@
-package io.ytka.detektrules.package_characteristic.processors
+package io.ytka.package_characteristic.detektext.processors
 
 import io.gitlab.arturbosch.detekt.api.Config
 import io.gitlab.arturbosch.detekt.api.FileProcessListener
-import io.ytka.detektrules.package_characteristic.model.DependencyStore
+import io.ytka.package_characteristic.domain.packagedeps.PackageDependencyStore
 import org.jetbrains.kotlin.com.intellij.openapi.util.Key
 import org.jetbrains.kotlin.psi.KtFile
 
-val DependenciesKey = Key<DependencyStore>("DependenciesKey")
+val DependenciesKey = Key<PackageDependencyStore>("DependenciesKey")
 
 class DependencyProcessor : FileProcessListener {
-    private var dependencyStore = DependencyStore.of(emptyList(), emptyList())
+    private var dependencyStore = PackageDependencyStore.of(emptyList(), emptyList())
 
     override fun init(config : Config) {
         val sub = config.subConfig("dependency").subConfig("PackageImport")
         val includes = sub.valueOrDefault("includes", emptyList<String>())
         val excludes = sub.valueOrDefault("excludes", emptyList<String>())
-        dependencyStore = DependencyStore.of(includes, excludes)
+        dependencyStore = PackageDependencyStore.of(includes, excludes)
     }
 
     override fun onProcess(file: KtFile, bindingContext: org.jetbrains.kotlin.resolve.BindingContext) {

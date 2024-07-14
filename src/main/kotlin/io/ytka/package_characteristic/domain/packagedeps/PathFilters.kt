@@ -1,4 +1,4 @@
-package io.ytka.detektrules.package_characteristic.model
+package io.ytka.package_characteristic.domain.packagedeps
 
 import java.nio.file.FileSystems
 import java.nio.file.Path

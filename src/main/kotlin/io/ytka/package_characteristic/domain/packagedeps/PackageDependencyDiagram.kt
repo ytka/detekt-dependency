@@ -1,6 +1,6 @@
-package io.ytka.detektrules.package_characteristic.model
+package io.ytka.package_characteristic.domain.packagedeps
 
-class DependencyDiagram(private val dependencies: List<Dependency>) {
+class PackageDependencyDiagram(private val dependencies: List<Dependency>) {
     fun toMermaid(): String {
         val sb = StringBuilder()
         sb.append("graph LR\n")

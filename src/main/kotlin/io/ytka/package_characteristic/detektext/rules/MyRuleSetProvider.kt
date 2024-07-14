@@ -1,9 +1,8 @@
-package io.ytka.detektrules.package_characteristic
+package io.ytka.package_characteristic.detektext.rules
 
 import io.gitlab.arturbosch.detekt.api.Config
 import io.gitlab.arturbosch.detekt.api.RuleSet
 import io.gitlab.arturbosch.detekt.api.RuleSetProvider
-import io.ytka.detektrules.package_characteristic.rules.TooManyFunctions
 
 class MyRuleSetProvider : RuleSetProvider {
 

@@ -1,16 +1,16 @@
-package io.ytka.detektrules.package_characteristic.model
+package io.ytka.package_characteristic.domain.packagedeps
 
 import java.nio.file.Path
 
 typealias PackageName = String
 typealias Dependency = Pair<PackageName, PackageName>
 
-class DependencyStore(private val pathFilters : PathFilters) {
+class PackageDependencyStore(private val pathFilters : PathFilters) {
     private val dependencies = mutableMapOf<PackageName,MutableSet<PackageName>>()
 
     companion object {
-        fun of(includes: List<String>, excludes: List<String>): DependencyStore {
-            return DependencyStore(PathFilters.of(includes, excludes))
+        fun of(includes: List<String>, excludes: List<String>): PackageDependencyStore {
+            return PackageDependencyStore(PathFilters.of(includes, excludes))
         }
     }
 
@@ -26,7 +26,7 @@ class DependencyStore(private val pathFilters : PathFilters) {
         dependencies.computeIfAbsent(source) { mutableSetOf() }.add(target)
     }
 
-    fun toList(): List<Dependency> {
+    private fun toList(): List<Dependency> {
         val result = mutableListOf<Dependency>()
         dependencies.forEach { (src, deps) ->
             deps.forEach { dep ->
@@ -44,5 +44,5 @@ class DependencyStore(private val pathFilters : PathFilters) {
         return sb.toString()
     }
 
-    fun toDiagram() = DependencyDiagram(toList()).toMermaid()
+    fun toDiagram() = PackageDependencyDiagram(toList()).toMermaid()
 }

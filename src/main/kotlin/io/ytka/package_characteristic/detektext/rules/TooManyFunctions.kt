@@ -1,4 +1,4 @@
-package io.ytka.detektrules.package_characteristic.rules
+package io.ytka.package_characteristic.detektext.rules
 
 import io.gitlab.arturbosch.detekt.api.*
 import org.jetbrains.kotlin.psi.KtFile
