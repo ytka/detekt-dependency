@@ -1,9 +1,18 @@
 package io.ytka.packagerestriction.imports
 
+import io.ytka.packagerestriction.packagepath.PackagePathFilter
+
 typealias PackagePath = String
 
 interface ImportRestriction {
     fun isAllowed(source: PackagePath, dest: PackagePath): Boolean
+
+    fun isAllowOnProject(projectPackagePrefix: String, source: PackagePath, dest: PackagePath): Boolean {
+        if (!source.startsWith(projectPackagePrefix) || !dest.startsWith(projectPackagePrefix)) {
+            return true
+        }
+        return isAllowed(source, dest)
+    }
 }
 
 class ImportRestrictionSet(private val rules: List<ImportRestriction>) : ImportRestriction {

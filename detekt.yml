@@ -19,20 +19,31 @@ processors:
   # - 'ProjectSLOCProcessor'
   # - 'LicenseHeaderLoaderExtension'
 
+
 package-restriction:
-  PackageRestrictionRule:
+  project-package-prefix: &project-package-prefix io.ytka.packagerestriction  # prefixにマッチするパッケージ名を対象とする。import先のチェックもこのprefixを含むものだけを対象とする。
+  PackageDependencyRule:
     active: true
-    project-package-prefix: io.ytka.packagerestriction  # prefixにマッチするパッケージ名を対象とする。import先のチェックもこのprefixを含むものだけを対象とする。
+    project-package-prefix: *project-package-prefix
     restrictions:
-      - name: io.ytka.packagerestriction.detektext{,.*}
+      - package: detektext{,.*}
         import-allows:
-          - io.ytka.packagerestriction.detektext{,.*}
-          - io.ytka.packagerestriction.imports{,.*}
-          - io.ytka.packagerestriction.packagedeps{,.*}
+          - detektext{,.*}
+          - imports{,.*}
+          - packagedeps{,.*}
+          - packagepath{,.*}
+      - package: imports{,.*}
+        import-allow:
+          - packagepath{,.*}
+      - package: packagedeps{,.*}
+        import-denys: ["*"]
+  PackageCyclomaticComplexRule:
+    active: true
+    project-package-prefix: *project-package-prefix
+    restrictions:
+      - package: detektext{,.*}
         cyclomatic-complex-threshold: 7
-      - name: io.ytka.packagerestriction.imports{,.*}
-        import-denys: ["*"]
+      - package: imports{,.*}
         cyclomatic-complex-threshold: 5
-      - name: io.ytka.packagerestriction.packagedeps{,.*}
-        import-denys: ["*"]
+      - package: packagedeps{,.*}
         cyclomatic-complex-threshold: 7

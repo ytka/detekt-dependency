@@ -1,5 +1,6 @@
 package io.ytka.packagerestriction.imports
 
+import io.ytka.packagerestriction.packagepath.PackagePathFilter
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
