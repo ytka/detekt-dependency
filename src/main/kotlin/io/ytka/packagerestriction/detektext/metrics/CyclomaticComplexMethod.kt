@@ -56,6 +56,8 @@ class CyclomaticComplexMethod(
             this.nestingFunctions = this@CyclomaticComplexMethod.nestingFunctions
         }
 
+        // println("function: ${function.fqName}, complexity: $complexity")
+
         if (complexity >= threshold) {
             return ThresholdedCodeSmell(
                     issue,

@@ -4,14 +4,14 @@ style:
 
 processors:
   active: true
-  exclude:
-    - 'ProjectCLOCProcessor'
-    - 'DetektProgressListener'
-    - 'KtFileCountProcessor'
-    - 'PackageCountProcessor'
-    - 'ClassCountProcessor'
-    - 'FunctionCountProcessor'
-    - 'PropertyCountProcessor'
+  #exclude:
+    #- 'ProjectCLOCProcessor'
+    #- 'DetektProgressListener'
+    #- 'KtFileCountProcessor'
+    #- 'PackageCountProcessor'
+    #- 'ClassCountProcessor'
+    #- 'FunctionCountProcessor'
+ #   - 'PropertyCountProcessor'
   # - 'ProjectComplexityProcessor'
   # - 'ProjectCognitiveComplexityProcessor'
   # - 'ProjectLLOCProcessor'
