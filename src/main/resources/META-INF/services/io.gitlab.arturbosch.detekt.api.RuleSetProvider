@@ -1,1 +1,1 @@
-io.ytka.detekt.dependency.extension.DependencyRuleSetProvider
+io.ytka.detektrules.package_characteristic.MyRuleSetProvider

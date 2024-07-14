@@ -1,4 +1,4 @@
-package io.ytka.detekt.dependency.model
+package io.ytka.detektrules.package_characteristic.model
 
 class DependencyDiagram(private val dependencies: List<Dependency>) {
     fun toMermaid(): String {

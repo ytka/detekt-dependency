@@ -1,8 +1,8 @@
-package io.ytka.detekt.dependency.extension.processors
+package io.ytka.detektrules.package_characteristic.processors
 
 import io.gitlab.arturbosch.detekt.api.Config
 import io.gitlab.arturbosch.detekt.api.FileProcessListener
-import io.ytka.detekt.dependency.model.DependencyStore
+import io.ytka.detektrules.package_characteristic.model.DependencyStore
 import org.jetbrains.kotlin.com.intellij.openapi.util.Key
 import org.jetbrains.kotlin.psi.KtFile
 

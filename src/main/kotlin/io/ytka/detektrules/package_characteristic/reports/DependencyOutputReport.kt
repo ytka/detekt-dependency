@@ -1,4 +1,4 @@
-package io.ytka.detekt.dependency.extension.reports
+package io.ytka.detektrules.package_characteristic.reports
 
 import io.gitlab.arturbosch.detekt.api.Detektion
 import io.gitlab.arturbosch.detekt.api.OutputReport

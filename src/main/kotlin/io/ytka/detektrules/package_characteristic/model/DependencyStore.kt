@@ -1,9 +1,9 @@
-package io.ytka.detekt.dependency.model
+package io.ytka.detektrules.package_characteristic.model
 
 import java.nio.file.Path
 
 typealias PackageName = String
-typealias Dependency = Pair<PackageName,PackageName>
+typealias Dependency = Pair<PackageName, PackageName>
 
 class DependencyStore(private val pathFilters : PathFilters) {
     private val dependencies = mutableMapOf<PackageName,MutableSet<PackageName>>()

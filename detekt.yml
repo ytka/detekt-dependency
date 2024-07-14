@@ -1,7 +1,7 @@
 style:
   WildcardImport:
     active: false
-dependency:
+package-characteristic:
   TooManyFunctions:
     active: true
   PackageImport:

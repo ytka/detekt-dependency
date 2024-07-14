@@ -1,17 +1,17 @@
-package io.ytka.detekt.dependency.extension
+package io.ytka.detektrules.package_characteristic
 
 import io.gitlab.arturbosch.detekt.api.Config
 import io.gitlab.arturbosch.detekt.api.ConfigValidator
 import io.gitlab.arturbosch.detekt.api.Notification
 
-class DependencyConfigValidator : ConfigValidator {
+class MyConfigValidator : ConfigValidator {
 
-    override val id: String = "DependencyConfigValidator"
+    override val id: String = "PackageCharacteristicConfigValidator"
 
     override fun validate(config: Config): Collection<Notification> {
         val result = mutableListOf<Notification>()
         runCatching {
-            config.subConfig("dependency")
+            config.subConfig("package-characteristic")
                 .subConfig("PackageImport")
                 .valueOrNull<Boolean>("active")
         }.onFailure {

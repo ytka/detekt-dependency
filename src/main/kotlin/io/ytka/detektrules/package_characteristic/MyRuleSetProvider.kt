@@ -1,13 +1,13 @@
-package io.ytka.detekt.dependency.extension
+package io.ytka.detektrules.package_characteristic
 
 import io.gitlab.arturbosch.detekt.api.Config
 import io.gitlab.arturbosch.detekt.api.RuleSet
 import io.gitlab.arturbosch.detekt.api.RuleSetProvider
-import io.ytka.detekt.dependency.extension.rules.TooManyFunctions
+import io.ytka.detektrules.package_characteristic.rules.TooManyFunctions
 
-class DependencyRuleSetProvider : RuleSetProvider {
+class MyRuleSetProvider : RuleSetProvider {
 
-    override val ruleSetId = "dependency"
+    override val ruleSetId = "package-characteristic"
 
     override fun instance(config: Config): RuleSet = RuleSet(
         ruleSetId,
