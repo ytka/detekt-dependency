@@ -1,6 +1,5 @@
 package io.ytka.packagerestriction.detektext.rules
 
-import io.github.detekt.psi.absolutePath
 import io.gitlab.arturbosch.detekt.api.*
 import io.ytka.packagerestriction.import.*
 import org.jetbrains.kotlin.psi.KtFile
@@ -28,7 +27,7 @@ class PackageRestrictionRule(config: Config) : Rule(config) {
         Debt.TWENTY_MINS)
 
     private val projectPackagePrefix = valueOrDefault("project-package-prefix", "")
-    private val packageRestrictionSet = PackageRestrictionSet()
+    private val packageRestrictionSet = PackageRestrictionSet(projectPackagePrefix)
     //private val threshold = 10
     //private var amount: Int = 0
 
@@ -55,8 +54,8 @@ class PackageRestrictionRule(config: Config) : Rule(config) {
 //            val destPkg = importDirective.importedFqName.toString()
             //println("sourcePkg: $sourcePkg, destPkg: $destPkg")
 
-            pkgRestrictions.forEach {
-                if (!it.importRestriction.isAllowed(sourcePkg, destPkg)) {
+            pkgRestrictions.forEach { restriction ->
+                if (!restriction.isAllowedImport(sourcePkg, destPkg)) {
                     report(CodeSmell(issue, Entity.from(file),
                         "The import of $destPkg is not allowed in $sourcePkg."))
                 }
