@@ -27,14 +27,9 @@ package-restriction:
     project-package-prefix: *project-package-prefix
     restrictions:
       - package: detektext{,.*}
-        import-allows:
-          - detektext{,.*}
-          - imports{,.*}
-          - packagedeps{,.*}
-          - packagepath{,.*}
+        import-allows: ["detektext{,.*}", "imports{,.*}", "packagedeps{,.*}", "packagepath{,.*}" ]
       - package: imports{,.*}
-        import-allow:
-          - packagepath{,.*}
+        import-allow: ["packagepath{,.*}"]
       - package: packagedeps{,.*}
         import-denys: ["*"]
   PackageCyclomaticComplexRule:
