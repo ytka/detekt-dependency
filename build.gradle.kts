@@ -1,5 +1,3 @@
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-
 plugins {
     id("org.jetbrains.kotlin.jvm") version "2.0.0"
 }

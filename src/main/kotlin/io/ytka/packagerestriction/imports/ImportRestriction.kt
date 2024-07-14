@@ -1,4 +1,4 @@
-package io.ytka.packagerestriction.import
+package io.ytka.packagerestriction.imports
 
 typealias PackagePath = String
 

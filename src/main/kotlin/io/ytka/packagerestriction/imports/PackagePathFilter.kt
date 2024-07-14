@@ -1,4 +1,4 @@
-package io.ytka.packagerestriction.import
+package io.ytka.packagerestriction.imports
 
 import java.nio.file.FileSystems
 import java.nio.file.PathMatcher
@@ -20,9 +20,10 @@ class PackagePathFilter(pathPattern: PackagePathPattern) {
 }
 
 private fun complementFilterPattern(pattern: String): String {
-    if (pattern.endsWith("*")) {
-        return pattern
-    }
+    //if (pattern.endsWith("*")) {
+    //    return pattern
+    //}
     // Add wildcard to match subpackages
-    return "$pattern{,.*}"
+    //return "$pattern{,.*}"
+    return pattern
 }
