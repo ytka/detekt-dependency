@@ -26,6 +26,7 @@ package-restriction:
     packages:
       - name: io.ytka.packagerestriction.detektext
         import-allows:
+          - io.ytka.packagerestriction.detektext
           - io.ytka.packagerestriction.import
           - io.ytka.packagerestriction.packagedeps
         cyclomatic-complexity-threshold: 3

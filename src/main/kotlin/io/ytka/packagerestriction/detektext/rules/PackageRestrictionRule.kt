@@ -51,10 +51,9 @@ class PackageRestrictionRule(config: Config) : Rule(config) {
         val pkgRestrictions = packageRestrictionSet.findPackageRestrictions(sourcePkg)
 
         val destPkgs = importList.imports.map { importDirective -> importDirective.importPath?.pathStr ?: ""}
-            .map { importPath -> importPath.substringBeforeLast(".") }
             .distinct()
         destPkgs.forEach { destPkg ->
-            //println("sourcePkg: $sourcePkg, destPkg: $destPkg")
+            println("sourcePkg: $sourcePkg, destPkg: $destPkg")
             pkgRestrictions.forEach { pkgRestriction ->
                 if (!pkgRestriction.isAllowedImport(sourcePkg, destPkg)) {
                     report(CodeSmell(issue, Entity.from(importList),
