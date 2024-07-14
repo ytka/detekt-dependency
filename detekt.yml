@@ -31,10 +31,8 @@ package-restriction:
           - io.ytka.packagerestriction.packagedeps{,.*}
         cyclomatic-complex-threshold: 7
       - name: io.ytka.packagerestriction.imports{,.*}
-        import-denys:
-          - "*"
+        import-denys: ["*"]
         cyclomatic-complex-threshold: 5
       - name: io.ytka.packagerestriction.packagedeps{,.*}
-        import-denys:
-          - "*"
+        import-denys: ["*"]
         cyclomatic-complex-threshold: 7
