@@ -4,6 +4,7 @@ import io.gitlab.arturbosch.detekt.api.*
 import io.ytka.packagerestriction.imports.*
 import io.ytka.packagerestriction.packagepath.PackagePathFilter
 import io.ytka.packagerestriction.packagepath.ProjectPackagePrefix
+import io.ytka.packagerestriction.packagepath.complementPackagePathSuffix
 import org.jetbrains.kotlin.psi.KtImportList
 
 class PackageDependencyRule(config: Config) : Rule(config) {
@@ -20,9 +21,13 @@ class PackageDependencyRule(config: Config) : Rule(config) {
         definitions.forEach() { def ->
             val pkgPathFilter = (def["package"] as String).let { projectPackagePrefix.complementPackagePath(it) }
             @Suppress("UNCHECKED_CAST")
-            val importAllows = (def["import-allows"] as List<String>?)?.map { projectPackagePrefix.complementPackagePath(it) }
+            val importAllows = (def["import-allows"] as List<String>?)?.
+                map { projectPackagePrefix.complementPackagePath(it) }?.
+                map { complementPackagePathSuffix(it) }
             @Suppress("UNCHECKED_CAST")
-            val importDenys = (def["import-denys"] as List<String>?)?.map { projectPackagePrefix.complementPackagePath(it) }
+            val importDenys = (def["import-denys"] as List<String>?)?.
+                map { projectPackagePrefix.complementPackagePath(it) }?.
+                map { complementPackagePathSuffix(it) }
 
             restrictions.add(PackagePathFilter(pkgPathFilter), createImportRestriction(pkgPathFilter, importAllows, importDenys))
         }

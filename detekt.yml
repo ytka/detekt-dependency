@@ -21,23 +21,31 @@ processors:
 
 
 package-restriction:
-  project-package-prefix: &project-package-prefix io.ytka.packagerestriction  # prefixにマッチするパッケージ名を対象とする。import先のチェックもこのprefixを含むものだけを対象とする。
+  # 対象プロジェクトのパッケージ名プレフィックス。package名を定義するときに自動補完される。
+  # dependencyチェックの際は import 対象がこのプレフィックスを持つパッケージであるものだけをチェックするのに使われる。
+  project-package-prefix: &project-package-prefix io.ytka.packagerestriction
   PackageDependencyRule:
     active: true
     project-package-prefix: *project-package-prefix
     restrictions:
-      - package: detektext{,.*}
-        import-allows: ["detektext{,.*}", "imports{,.*}", "packagedeps{,.*}", "packagepath{,.*}" ]
+      # package は指定したパッケージに対して、importの制限を設定する。
+      # package の値にはproject-package-prefixが自動補完される。ワイルドカードを利用することもできる。
+      - package: detektext{,.*} # io.ytka.packagerestriction.detektxtextとそのサブパッケージに対して適用する
+        # import-allows は、指定したパッケージに対して、import-denys 以外のパッケージをimportすることを許可する。
+        # project-package-prefixが自動補完される。また末尾には{,.*}が自動補完され、指定したパッケージ名のサブパッケージも含めて許可する。
+        import-allows: ["detektext", "imports", "packagedeps", "packagepath" ]
       - package: imports{,.*}
-        import-allow: ["packagepath{,.*}"]
+        import-allow: ["packagepath"]
       - package: packagedeps{,.*}
+        # import-denys は、指定したパッケージに対して、importを許可しないパッケージを指定する。
+        # 補完ルールはimport-allowsと同様
         import-denys: ["*"]
   PackageCyclomaticComplexRule:
     active: true
     project-package-prefix: *project-package-prefix
     restrictions:
-      - package: detektext{,.*}
-        cyclomatic-complex-threshold: 7
+      - package: "*"
+        cyclomatic-complex-threshold: 10
       - package: imports{,.*}
         cyclomatic-complex-threshold: 5
       - package: packagedeps{,.*}
