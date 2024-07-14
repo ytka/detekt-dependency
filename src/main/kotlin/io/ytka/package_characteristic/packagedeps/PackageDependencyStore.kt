@@ -2,9 +2,6 @@ package io.ytka.package_characteristic.packagedeps
 
 import java.nio.file.Path
 
-typealias PackageName = String
-typealias Dependency = Pair<PackageName, PackageName>
-
 class PackageDependencyStore(private val pathFilters : PathFilters) {
     private val dependencies = mutableMapOf<PackageName,MutableSet<PackageName>>()
 
@@ -26,11 +23,11 @@ class PackageDependencyStore(private val pathFilters : PathFilters) {
         dependencies.computeIfAbsent(source) { mutableSetOf() }.add(target)
     }
 
-    private fun toList(): List<Dependency> {
-        val result = mutableListOf<Dependency>()
+    private fun toList(): List<PackageDependency> {
+        val result = mutableListOf<PackageDependency>()
         dependencies.forEach { (src, deps) ->
             deps.forEach { dep ->
-                result.add(Pair(src, dep))
+                result.add(PackageDependency(src, dep))
             }
         }
         return result
