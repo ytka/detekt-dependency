@@ -1,10 +1,10 @@
 style:
   WildcardImport:
     active: false
-package-characteristic:
-  PackageCharacteristic:
+package-restriction:
+  PackageRestriction:
     active: true
-    package-prefix: io.ytka.package_characteristic # TODO
+    package-prefix: io.ytka.packagerestriction # TODO
     packages:
       - name: detektext
         import-allows: [packagedeps]

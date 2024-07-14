@@ -1,4 +1,4 @@
-package io.ytka.package_characteristic.detektext.rules
+package io.ytka.packagerestriction.detektext.rules
 
 import io.gitlab.arturbosch.detekt.api.Config
 import io.gitlab.arturbosch.detekt.api.RuleSet
@@ -6,12 +6,12 @@ import io.gitlab.arturbosch.detekt.api.RuleSetProvider
 
 class MyRuleSetProvider : RuleSetProvider {
 
-    override val ruleSetId = "package-characteristic"
+    override val ruleSetId = "package-restriction"
 
     override fun instance(config: Config): RuleSet = RuleSet(
         ruleSetId,
         listOf(
-            PackageCharacteristic(config),
+            PackageRestriction(config),
         )
     )
 }

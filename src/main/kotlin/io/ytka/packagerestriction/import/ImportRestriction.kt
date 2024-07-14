@@ -1,19 +1,19 @@
-package io.ytka.package_characteristic.importrestriction
+package io.ytka.packagerestriction.import
 
 typealias PackageName = String
 
-interface ImportRestrictionRule {
+interface ImportRestriction {
     fun isAllowed(source: PackageName, dest: PackageName): Boolean
 }
 
-class ImportRestrictionRuleSet(private val rules: List<ImportRestrictionRule>) : ImportRestrictionRule {
+class ImportRestrictionSet(private val rules: List<ImportRestriction>) : ImportRestriction {
     override fun isAllowed(source: PackageName, dest: PackageName): Boolean {
         return rules.all { it.isAllowed(source, dest) }
     }
 }
 
 
-class ImportRestrictionRuleAllow(source: PackageName, allowedDests: List<PackageName>) : ImportRestrictionRule {
+class ImportRestrictionAllow(source: PackageName, allowedDests: List<PackageName>) : ImportRestriction {
     private val sourceFilter = PackagePathFilter(source)
     private val allowPatterns: Set<PackagePathFilter> = allowedDests.map { PackagePathFilter(it) }.toSet()
     override fun isAllowed(source: PackageName, dest: PackageName) : Boolean {
@@ -24,7 +24,7 @@ class ImportRestrictionRuleAllow(source: PackageName, allowedDests: List<Package
     }
 }
 
-class ImportRestrictionRuleDeny(source: PackageName, denyDests: List<PackageName>) : ImportRestrictionRule {
+class ImportRestrictionDeny(source: PackageName, denyDests: List<PackageName>) : ImportRestriction {
     private val sourceFilter = PackagePathFilter(source)
     private val denyPatterns: Set<PackagePathFilter> = denyDests.map { PackagePathFilter(it) }.toSet()
     override fun isAllowed(source: PackageName, dest: PackageName): Boolean {

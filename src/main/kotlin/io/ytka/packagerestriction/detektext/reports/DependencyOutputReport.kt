@@ -1,4 +1,4 @@
-package io.ytka.package_characteristic.detektext.reports
+package io.ytka.packagerestriction.detektext.reports
 
 import io.gitlab.arturbosch.detekt.api.Detektion
 import io.gitlab.arturbosch.detekt.api.OutputReport

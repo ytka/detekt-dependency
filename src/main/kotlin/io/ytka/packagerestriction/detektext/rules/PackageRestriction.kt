@@ -1,13 +1,13 @@
-package io.ytka.package_characteristic.detektext.rules
+package io.ytka.packagerestriction.detektext.rules
 
 import io.gitlab.arturbosch.detekt.api.*
 import org.jetbrains.kotlin.psi.KtFile
 import org.jetbrains.kotlin.psi.KtNamedFunction
 
-class PackageCharacteristic(config: Config) : Rule(config) {
+class PackageRestriction(config: Config) : Rule(config) {
     override val issue = Issue(javaClass.simpleName,
         Severity.Maintainability,
-        "Package characteristic violation.",
+        "Package restriction violation.",
         Debt.TWENTY_MINS)
 
     private val threshold = 10

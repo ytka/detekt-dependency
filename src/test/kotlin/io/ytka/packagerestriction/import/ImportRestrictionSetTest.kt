@@ -1,14 +1,14 @@
-package io.ytka.package_characteristic.importrestriction
+package io.ytka.packagerestriction.import
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-class ImportRestrictionRuleSetTest {
+class ImportRestrictionSetTest {
     @Test
     fun testIsAllowed() {
-        val rule = ImportRestrictionRuleSet(listOf(
-            ImportRestrictionRuleDeny("java.io", listOf("java.io.File")),
-            ImportRestrictionRuleAllow("java.io", listOf("java.io.FileInputStream"))
+        val rule = ImportRestrictionSet(listOf(
+            ImportRestrictionDeny("java.io", listOf("java.io.File")),
+            ImportRestrictionAllow("java.io", listOf("java.io.FileInputStream"))
         ))
         assertTrue(rule.isAllowed("java.io", "java.io.FileInputStream"))
         assertTrue(rule.isAllowed("java.net", "java.io.File"))

@@ -1,4 +1,4 @@
-package io.ytka.package_characteristic.packagedeps
+package io.ytka.packagerestriction.packagedeps
 
 import java.nio.file.Path
 
