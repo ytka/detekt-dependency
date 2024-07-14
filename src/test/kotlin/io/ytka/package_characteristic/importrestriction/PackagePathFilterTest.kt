@@ -1,4 +1,4 @@
-package io.ytka.package_characteristic.packagedeps
+package io.ytka.package_characteristic.importrestriction
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test

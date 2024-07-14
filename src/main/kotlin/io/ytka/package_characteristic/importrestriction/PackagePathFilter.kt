@@ -1,4 +1,4 @@
-package io.ytka.package_characteristic.packagedeps
+package io.ytka.package_characteristic.importrestriction
 
 import java.nio.file.FileSystems
 import java.nio.file.PathMatcher
