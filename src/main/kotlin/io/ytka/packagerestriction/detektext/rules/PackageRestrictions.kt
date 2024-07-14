@@ -1,12 +1,11 @@
 package io.ytka.packagerestriction.detektext.rules
 
-import io.ytka.packagerestriction.detektext.metrics.CyclomaticComplexMethod
-import io.ytka.packagerestriction.detektext.metrics.CyclomaticComplexity
+import io.ytka.packagerestriction.detektext.metrics.PRCyclomaticComplexMethod
 import io.ytka.packagerestriction.imports.*
 
 class PackageRestriction(
     val importRestriction: ImportRestrictionInProject,
-    val cyclomaticComplexMethod: CyclomaticComplexMethod,
+    val cyclomaticComplexMethod: PRCyclomaticComplexMethod,
 )
 
 class PackageRestrictions(private val projectPackagePrefix: String) {
@@ -24,19 +23,16 @@ class PackageRestrictions(private val projectPackagePrefix: String) {
             val importAllows = pkg["import-allows"] as List<String>?
             @Suppress("UNCHECKED_CAST")
             val importDenys = pkg["import-denys"] as List<String>?
-            val cyclomaticComplexityThreshold = pkg["cyclomatic-complex-threshold"] as Int? ?: 15
+            val cyclomaticComplexityThreshold = pkg["cyclomatic-complex-threshold"] as Int?
             // println("name: $name, importAllows: $importAllows, importDenys: $importDenys, cyclomaticComplexityThreshold: $cyclomaticComplexityThreshold")
 
             val importRestriction = createImportRestriction(name as String, importAllows, importDenys)
-            val cyclomaticComplexMethod = CyclomaticComplexMethod(
-                threshold = cyclomaticComplexityThreshold,
-            )
-            this.addPackageRestriction(PackagePathFilter(name), importRestriction, cyclomaticComplexMethod)
+            this.addPackageRestriction(PackagePathFilter(name), importRestriction, PRCyclomaticComplexMethod(cyclomaticComplexityThreshold))
         }
     }
 
     private val packageRestrictionSets: MutableMap<PackagePathFilter, PackageRestriction> = mutableMapOf()
-    private fun addPackageRestriction(pathFilter: PackagePathFilter, importRestriction: ImportRestriction, cyclomaticComplexMethod: CyclomaticComplexMethod) {
+    private fun addPackageRestriction(pathFilter: PackagePathFilter, importRestriction: ImportRestriction, cyclomaticComplexMethod: PRCyclomaticComplexMethod) {
         packageRestrictionSets[pathFilter] = PackageRestriction(
             importRestriction = ImportRestrictionInProject(projectPackagePrefix, pathFilter, importRestriction),
             cyclomaticComplexMethod = cyclomaticComplexMethod,

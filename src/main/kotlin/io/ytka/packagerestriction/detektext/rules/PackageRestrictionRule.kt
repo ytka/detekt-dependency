@@ -1,7 +1,6 @@
 package io.ytka.packagerestriction.detektext.rules
 
 import io.gitlab.arturbosch.detekt.api.*
-import io.ytka.packagerestriction.detektext.metrics.CyclomaticComplexMethod
 import org.jetbrains.kotlin.psi.KtImportList
 import org.jetbrains.kotlin.psi.KtNamedFunction
 
@@ -15,7 +14,7 @@ class PackageRestrictionRule(config: Config) : Rule(config) {
     private val packageRestrictions = PackageRestrictions(projectPackagePrefix)
 
     init {
-        val pkgs = valueOrNull<List<Map<String,Any>>>("packages")?: listOf()
+        val pkgs = valueOrNull<List<Map<String,Any>>>("restrictions")?: listOf()
         packageRestrictions.append(pkgs)
     }
 

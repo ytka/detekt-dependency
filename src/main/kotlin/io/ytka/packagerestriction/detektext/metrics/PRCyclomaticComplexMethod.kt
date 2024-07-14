@@ -1,7 +1,6 @@
 package io.ytka.packagerestriction.detektext.metrics
 
 import io.gitlab.arturbosch.detekt.api.*
-import io.gitlab.arturbosch.detekt.api.internal.Configuration
 import org.jetbrains.kotlin.psi.*
 
 /**
@@ -23,9 +22,9 @@ import org.jetbrains.kotlin.psi.*
  * - __Scope Functions__ - `let`, `run`, `with`, `apply`, and `also` ->
  *  [Reference](https://kotlinlang.org/docs/scope-functions.html)
  */
-class CyclomaticComplexMethod(
+class PRCyclomaticComplexMethod(
     // McCabe's Cyclomatic Complexity (MCC) number for a method.
-    private val threshold: Int = 15,
+    private val threshold: Int?,
     // Ignores a complex method if it only contains a single when expression.
     private val ignoreSingleWhenExpression: Boolean = false,
     // Whether to ignore simple (braceless) when entries.
@@ -37,7 +36,7 @@ class CyclomaticComplexMethod(
 ) {
 
     private val issue = Issue(
-        "CyclomaticComplexMethod",
+        "PRCyclomaticComplexMethod",
         Severity.Maintainability,
         "Prefer splitting up complex methods into smaller, easier to test methods.",
         Debt.TWENTY_MINS
@@ -46,14 +45,17 @@ class CyclomaticComplexMethod(
 
 
     fun visitNamedFunction(function: KtNamedFunction) : CodeSmell? {
+        if (threshold == null) {
+            return null
+        }
         if (ignoreSingleWhenExpression && hasSingleWhenExpression(function.bodyExpression)) {
             return null
         }
 
         val complexity = CyclomaticComplexity.calculate(function) {
-            this.ignoreSimpleWhenEntries = this@CyclomaticComplexMethod.ignoreSimpleWhenEntries
-            this.ignoreNestingFunctions = this@CyclomaticComplexMethod.ignoreNestingFunctions
-            this.nestingFunctions = this@CyclomaticComplexMethod.nestingFunctions
+            this.ignoreSimpleWhenEntries = this@PRCyclomaticComplexMethod.ignoreSimpleWhenEntries
+            this.ignoreNestingFunctions = this@PRCyclomaticComplexMethod.ignoreNestingFunctions
+            this.nestingFunctions = this@PRCyclomaticComplexMethod.nestingFunctions
         }
 
         // println("function: ${function.fqName}, complexity: $complexity")

@@ -23,7 +23,7 @@ package-restriction:
   PackageRestrictionRule:
     active: true
     project-package-prefix: io.ytka.packagerestriction  # prefixにマッチするパッケージ名を対象とする。import先のチェックもこのprefixを含むものだけを対象とする。
-    packages:
+    restrictions:
       - name: io.ytka.packagerestriction.detektext{,.*}
         import-allows:
           - io.ytka.packagerestriction.detektext{,.*}
