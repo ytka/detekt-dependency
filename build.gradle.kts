@@ -1,7 +1,7 @@
 plugins {
     id("org.jetbrains.kotlin.jvm") version "2.0.0"
     id("maven-publish")
-    id("io.gitlab.arturbosch.detekt") version "1.23.6"
+    //id("io.gitlab.arturbosch.detekt") version "1.23.6"
 }
 
 group = "io.github.ytka"
@@ -15,7 +15,7 @@ dependencies {
     compileOnly("io.gitlab.arturbosch.detekt:detekt-api:1.23.6")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
 
-    detektPlugins(files("build/libs/detekt-rules-package-restriction-$version.jar"))
+    //detektPlugins(files("libs/detekt-rules-package-restriction-$version.jar"))
 }
 
 tasks.test {
@@ -46,11 +46,9 @@ publishing {
     }
 }
 
+/*
 detekt {
     parallel = false
     config.setFrom(files("$rootDir/detekt.yml"))
-
-    //val detektTasks = tasks.withType<Detekt>()
-    //detektTasks.forEach { it.finalizedBy(reportMerge) }
-    //reportMerge { input.from(detektTasks.map { it.xmlReportFile }) }
 }
+*/
