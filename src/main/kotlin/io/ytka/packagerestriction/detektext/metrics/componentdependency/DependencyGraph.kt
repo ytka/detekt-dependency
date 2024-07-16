@@ -9,6 +9,7 @@ class ComponentDependencyGraph {
     private val edges = mutableSetOf<Pair<ComponentID, ComponentID>>()
 
     fun components() : Set<ComponentID> = vertexes
+    fun dependencies() : Set<Pair<ComponentID, ComponentID>> = edges
 
     fun addDependency(from: ComponentID, to: ComponentID) {
         vertexes.add(from)
@@ -23,6 +24,7 @@ class ComponentDependencyGraph {
         val ccd = attributes.values.sumOf { it.componentDependencyValue }
 
         return CalculatedComponentDependency(
+            graph = this,
             componentAttributes = attributes,
             ccd = ccd,
             acd = ccd.toDouble() / componentsCount,
@@ -85,6 +87,7 @@ data class CalculatedComponentAttributes(
 }
 
 data class CalculatedComponentDependency(
+    private val graph: ComponentDependencyGraph,
     val componentAttributes: Map<ComponentID,CalculatedComponentAttributes>,
     val componentCount: Int = componentAttributes.size,
     val ccd: Int, // Cumulative Component Dependency：CCD
@@ -99,4 +102,6 @@ data class CalculatedComponentDependency(
         }
         return b.toString()
     }
+
+    fun dependencies() = graph.dependencies()
 }
