@@ -11,6 +11,7 @@ repositories {
     mavenCentral()
 }
 
+
 dependencies {
     compileOnly("io.gitlab.arturbosch.detekt:detekt-api:1.23.6")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")

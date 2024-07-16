@@ -1,7 +1,7 @@
 package io.ytka.packagerestriction.detektext.rules
 
 import io.gitlab.arturbosch.detekt.api.*
-import io.ytka.packagerestriction.detektext.metrics.CyclomaticComplexMethod
+import io.ytka.packagerestriction.detektext.metrics.cycrlomaticcpmlexity.CyclomaticComplexMethod
 import io.ytka.packagerestriction.packagepath.PackagePathFilter
 import io.ytka.packagerestriction.packagepath.ProjectPackagePrefix
 import org.jetbrains.kotlin.psi.KtNamedFunction

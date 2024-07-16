@@ -1,4 +1,4 @@
-package io.ytka.packagerestriction.detektext.metrics
+package io.ytka.packagerestriction.detektext.metrics.cycrlomaticcpmlexity
 
 import io.gitlab.arturbosch.detekt.api.DetektVisitor
 import org.jetbrains.kotlin.lexer.KtTokens
