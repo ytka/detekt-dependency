@@ -13,28 +13,30 @@ val DependencyMetricsKey = Key<CalculatedComponentDependency>("DependencyMetrics
 
 
 class DependencyProcessor : FileProcessListener {
-    private var dependencyStore = PackageDependencyStore.of(emptyList(), emptyList())
+    //private var dependencyStore = PackageDependencyStore.of(emptyList(), emptyList())
+    private var projectPackagePrefix : String = ""
     private var dependencyGraph = ComponentDependencyGraph()
 
     override fun init(config : Config) {
-        val sub = config.subConfig("dependency").subConfig("PackageImport")
-        val includes = sub.valueOrDefault("includes", emptyList<String>())
-        val excludes = sub.valueOrDefault("excludes", emptyList<String>())
-        dependencyStore = PackageDependencyStore.of(includes, excludes)
+        val sub = config.subConfig("package-restriction")
+        projectPackagePrefix = sub.valueOrDefault("project-package-prefix", "")
+        //dependencyStore = PackageDependencyStore.of(includes, excludes)
     }
 
     override fun onProcess(file: KtFile, bindingContext: org.jetbrains.kotlin.resolve.BindingContext) {
         file.importDirectives.forEach { importDirective ->
             val dest = importDirective.importedFqName?.parent()?.asString()
             if (dest != null) {
-                dependencyGraph.addDependency(file.packageFqName.asString(), dest)
-                dependencyStore.addDependency(file.packageFqName.asString(), dest)
+                if (projectPackagePrefix.isNotEmpty() && dest.startsWith(projectPackagePrefix)) {
+                    dependencyGraph.addDependency(file.packageFqName.asString(), dest)
+                    //dependencyStore.addDependency(file.packageFqName.asString(), dest)
+                }
             }
         }
     }
 
     override fun onFinish(files: List<KtFile>, result: io.gitlab.arturbosch.detekt.api.Detektion, bindingContext: org.jetbrains.kotlin.resolve.BindingContext) {
-        result.addData(DependenciesKey, dependencyStore)
+        //result.addData(DependenciesKey, dependencyStore)
         result.addData(DependencyMetricsKey, dependencyGraph.calculate())
     }
 }
